@@ -1,0 +1,3 @@
+[submodule "secmgr"]
+	path = secmgr
+	url = git@github.com:googlegsa/secmgr.git
