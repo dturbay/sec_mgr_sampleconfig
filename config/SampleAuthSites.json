@@ -18,7 +18,7 @@
           "enableAuthn": true,
           "enableGroupLookup": false,
           "enableImplicitEveryone": false,
-          "hostport": "127.0.0.1:389",
+          "hostport": "openldap:389",
           "bindDn": "uid\u003duser1,ou\u003dPeople,dc\u003dexample,dc\u003dcom",
           "password": "password1",
           "searchBase": "dc\u003dexample,dc\u003dcom",

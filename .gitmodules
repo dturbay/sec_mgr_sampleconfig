@@ -1,3 +1,6 @@
 [submodule "secmgr"]
 	path = secmgr
 	url = git@github.com:googlegsa/secmgr.git
+[submodule "openldap_sample_img"]
+	path = openldap_sample_img
+	url = git@github.com:dturbay/openldap_sample_img.git

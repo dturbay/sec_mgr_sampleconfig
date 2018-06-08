@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  secmgr:
+    build:
+      context: .
+      args:
+        - SP_SAML_ENTITY=http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY/gsa-actual
+        - IDP_SAML_ENTITY=http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY
+    image: secmgr:latest
+    ports:
+      - 8443:8443
+    depends_on:
+      - openldap
+
+  openldap:
+    build: ./openldap_sample_img
+    image: openldap
+    ports:
+      - 389:389
+
+
