@@ -1,0 +1,5 @@
+<Context docBase="#APP_PATH#">
+  <Parameter name="configPath" value="#AUTHN_SITES_PATH#"
+             override="true"/>
+</Context>
+

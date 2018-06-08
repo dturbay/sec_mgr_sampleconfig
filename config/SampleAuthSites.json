@@ -1,0 +1,123 @@
+{
+  "version": 8,
+  "CGs": [
+    {
+      "name": "Default",
+      "displayName": "Default",
+      "requiresUsername": true,
+      "requiresPassword": false,
+      "isOptional": false,
+      "mechanisms": [
+        {
+          "timeout": -1,
+          "trustDuration": 1200000,
+          "name": "Default_groups_f7e06748e512efd782e2eb0449f1abee",
+          "typeName": "AuthnMechGroups"
+        },
+        {
+          "enableAuthn": true,
+          "enableGroupLookup": false,
+          "enableImplicitEveryone": false,
+          "hostport": "127.0.0.1:389",
+          "bindDn": "uid\u003duser1,ou\u003dPeople,dc\u003dexample,dc\u003dcom",
+          "password": "password1",
+          "searchBase": "dc\u003dexample,dc\u003dcom",
+          "userSearchFilter": "uid\u003d%s",
+          "groupSearchFilter": "(|(member:1.2.840.113556.1.4.1941:\u003d%dn)(member:1.2.840.113556.1.4.1941:\u003d%s))",
+          "groupFormat": "CN",
+          "sslSupport": 0,
+          "supportedAuthMethods": 1,
+          "timeout": -1,
+          "trustDuration": 1200000,
+          "name": "spldap",
+          "typeName": "AuthnMechLdap"
+        }
+      ]
+    }
+  ],
+  "params": {
+    "ACL_GROUPS_FILENAME": "#CONFIG_DIR#/acl_groups.enterprise",
+    "ACL_URLS_FILENAME": "#CONFIG_DIR#/acl_urls.enterprise",
+    "GROUPS_FEED_FILENAME": "#CONFIG_DIR#/groups_feed.enterprise",
+    "CERTIFICATE_AUTHORITIES_FILENAME": "#CONFIG_DIR#/cacerts.jks",
+    "CHECK_SERVER_CERTIFICATE": true,
+    "CONNECTOR_MANAGER_INFO": {
+      "entries": []
+    },
+    "DENY_RULES_FILENAME": "#CONFIG_DIR#/deny_rules.enterprise",
+    "PROXY_CONF_FILENAME": "#CONFIG_DIR#/conf/proxies.enterprise",
+    "TRUST_FILENAME": "#CONFIG_DIR#/trust.enterprise",
+    "GLOBAL_BATCH_REQUEST_TIMEOUT": 5.0,
+    "GLOBAL_SINGLE_REQUEST_TIMEOUT": 2.5,
+    "LATE_BINDING_ACL": false,
+    "SAML_METADATA_FILENAME": "#CONFIG_DIR#/saml-metadata.xml",
+    "SERVER_CERTIFICATE_FILENAME": "#CONFIG_DIR#/server.jks",
+    "SIGNING_CERTIFICATE_FILENAME": "#CONFIG_DIR#/server.crt",
+    "SIGNING_KEY_FILENAME": "#CONFIG_DIR#/server.key",
+    "SLOW_HOST_EMBARGO_PERIOD": 600,
+    "SLOW_HOST_NUMBER_OF_TIMEOUTS": 100,
+    "SLOW_HOST_SAMPLE_PERIOD": 300,
+    "SLOW_HOST_TRACKER_ENABLED": false,
+    "SLOW_HOST_TRACKER_SIZE": 100,
+    "STUNNEL_PORT": 7843,
+    "AUTHZ_CONFIG_FILENAME": "#CONFIG_DIR#/FlexAuthz.xml",
+    "CONNECTOR_MANAGER_URLS": {
+      "contents": []
+    }
+  },
+  "flexAuthz": {
+    "entries": [
+      {
+        "urlPattern": "/",
+        "authzRule": {
+          "authnId": "",
+          "authzMechType": "PER_URL_ACL",
+          "displayName": "0",
+          "timeout": -1
+        },
+        "uniqueRowId": "a5b8af04-c849-4711-b05c-afe20ff2090b"
+      },
+      {
+        "urlPattern": "/",
+        "authzRule": {
+          "authnId": "",
+          "authzMechType": "CACHE",
+          "displayName": "1",
+          "timeout": -1
+        },
+        "uniqueRowId": "6c8c342c-63ed-443f-a9bf-4ec8f8ba523f"
+      },
+      {
+        "urlPattern": "/",
+        "authzRule": {
+          "authnId": "Default",
+          "authzMechType": "POLICY",
+          "displayName": "2",
+          "timeout": -1
+        },
+        "uniqueRowId": "54789c77-d318-43ea-b879-4d9ad057d3ea"
+      },
+      {
+        "urlPattern": "^googleconnector://",
+        "authzRule": {
+          "authnId": "Default",
+          "authzMechType": "CONNECTOR",
+          "connectorName": "",
+          "displayName": "3",
+          "timeout": -1
+        },
+        "uniqueRowId": "103fb16b-3ec8-4a97-b135-0ac3a3da33f3"
+      },
+      {
+        "urlPattern": "regexpIgnoreCase:^(http|https)://",
+        "authzRule": {
+          "authnId": "Default",
+          "authzMechType": "HEADREQUEST",
+          "displayName": "4",
+          "timeout": -1
+        },
+        "uniqueRowId": "2b865940-89e7-4faa-8611-974323cc8506"
+      }
+    ]
+  }
+}
