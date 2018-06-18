@@ -47,10 +47,17 @@ RUN cp --backup=numbered ${WEB_APP_CONF_PATH}/server.xml ${CATALINA_HOME}/conf
 
 ARG SP_SAML_ENTITY
 ARG IDP_SAML_ENTITY
+ARG SEC_MGR_HOST_PORT
+ARG ARTIFACT_CONSUMER_URL
+
 
 RUN sed -i "s|{SP_SAML_ENTITY}|${SP_SAML_ENTITY}|" ${WEB_APP_CONF_PATH}/saml-metadata.xml \
-	&& sed -i "s|{IDP_SAML_ENTITY}|${IDP_SAML_ENTITY}|" ${WEB_APP_CONF_PATH}/saml-metadata.xml
+	&& sed -i "s|{IDP_SAML_ENTITY}|${IDP_SAML_ENTITY}|" ${WEB_APP_CONF_PATH}/saml-metadata.xml \
+	&& sed -i "s|{SEC_MGR_HOST_PORT}|${SEC_MGR_HOST_PORT}|" ${WEB_APP_CONF_PATH}/saml-metadata.xml \
+	&& sed -i "s|{ARTIFACT_CONSUMER_URL}|${ARTIFACT_CONSUMER_URL}|" ${WEB_APP_CONF_PATH}/saml-metadata.xml
 
 EXPOSE 8443
+EXPOSE 8080
+
 
 

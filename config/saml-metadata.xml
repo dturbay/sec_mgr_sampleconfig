@@ -13,11 +13,11 @@
 
     <SPSSODescriptor
         protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-      <AssertionConsumerService
+        <AssertionConsumerService
           index="0"
           isDefault="true"
           Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-          Location="https://stdiofy14.enterprise.corp/SamlArtifactConsumer"
+          Location="{ARTIFACT_CONSUMER_URL}"
       />
     </SPSSODescriptor>
 
@@ -41,13 +41,13 @@
       <!-- Location="https://$$GSA$$/security-manager/samlauthn" -->
       <SingleSignOnService
           Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-          Location="https://stdiofy14.enterprise.corp/security-manager/samlauthn"
+          Location="https://{SEC_MGR_HOST_PORT}/security-manager/samlauthn"
       />
       <ArtifactResolutionService
           index="0"
           isDefault="true"
           Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-          Location="http://localhost:7886/security-manager/samlartifact"
+          Location="https://{SEC_MGR_HOST_PORT}/security-manager/samlartifact"
       />
     </IDPSSODescriptor>
 
@@ -58,13 +58,13 @@
           index="0"
           isDefault="true"
           Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-          Location="https://stdiofy14.enterprise.corp/security-manager/samlassertionconsumer"
+          Location="https://{SEC_MGR_HOST_PORT}/security-manager/samlassertionconsumer"
       />
       <AssertionConsumerService
           index="1"
           isDefault="false"
           Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact"
-          Location="https://stdiofy14.enterprise.corp/security-manager/samlassertionconsumer"
+          Location="https://{SEC_MGR_HOST_PORT}/security-manager/samlassertionconsumer"
       />
     </SPSSODescriptor>
 
@@ -72,7 +72,7 @@
         protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
       <AuthzService
           Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"
-          Location="http://localhost:7886/security-manager/samlauthz"
+          Location="https://{SEC_MGR_HOST_PORT}/security-manager/samlauthz"
       />
     </PDPDescriptor>
 
