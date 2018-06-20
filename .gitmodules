@@ -4,3 +4,6 @@
 [submodule "openldap_sample_img"]
 	path = openldap_sample_img
 	url = git@github.com:dturbay/openldap_sample_img.git
+[submodule "sample_sp_for_secmgr"]
+	path = sample_sp_for_secmgr
+	url = git@github.com:dturbay/sample_sp_for_secmgr.git

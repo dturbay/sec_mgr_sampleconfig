@@ -26,4 +26,12 @@ services:
     ports:
       - 389:389
 
+  sample-client:
+    build:
+      ./sample_sp_for_secmgr
+    image: sample_sp_for_secmgr
+    ports:
+      - 8088:8088
+    depends_on:
+      - secmgr
 
