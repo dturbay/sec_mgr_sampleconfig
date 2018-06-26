@@ -9,6 +9,7 @@ services:
         - IDP_SAML_ENTITY=http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY
         - SEC_MGR_HOST_PORT=localhost:8443
         - ARTIFACT_CONSUMER_URL=http://localhost:8088/sample-sp/saml/sp/SSO
+        - AUTH_SITES_FILE_NAME=LDAP_SAML_AuthSites.json
           # - APPLIENCE_ID=T4-KRQHV3XHUQEXY
     image: secmgr:latest
     environment:
