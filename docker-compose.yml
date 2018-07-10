@@ -5,12 +5,10 @@ services:
     build:
       context: .
       args:
-        - SP_SAML_ENTITY=http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY/gsa-actual
-        - IDP_SAML_ENTITY=http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY
-        - SEC_MGR_HOST_PORT=localhost:8443
-        - ARTIFACT_CONSUMER_URL=http://localhost:8088/sample-sp/saml/sp/SSO
-        - AUTH_SITES_FILE_NAME=LDAP_SAML_AuthSites.json
-          # - APPLIENCE_ID=T4-KRQHV3XHUQEXY
+        - AUTH_SITES_FILE_NAME=LDAP_SAML_AuthSites.json   # With SAML authn mechanism
+        - HTTP_PORT=8080
+        - HTTPS_PORT=8443
+        - METADATA_CONFIG=saml-metadata-complex.xml
     image: secmgr:latest
     environment:
       - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5006 -Djava.security.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
@@ -20,6 +18,7 @@ services:
       - 5006:5006
     depends_on:
       - openldap
+      - secmgr1
 
   openldap:
     build: ./openldap_sample_img
@@ -35,4 +34,26 @@ services:
       - 8088:8088
     depends_on:
       - secmgr
+
+  http-authn:
+    build: ./http_authn_service
+    image: http_authn_service
+
+  secmgr1:
+    build:
+      context: .
+      args:
+        - AUTH_SITES_FILE_NAME=HttpBasic_AuthSites.json
+        - HTTP_PORT=8090
+        - HTTPS_PORT=8493
+        - METADATA_CONFIG=saml-metadata-basic.xml
+    image: secmgr1:latest
+    environment:
+      - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY1 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5009 -Dsecurity.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
+    ports:
+      - 8090:8090
+      - 8493:8493
+      - 5009:5009
+    depends_on:
+      - http-authn
 

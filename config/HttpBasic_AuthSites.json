@@ -8,30 +8,19 @@
       "requiresPassword": false,
       "isOptional": false,
       "mechanisms": [
-        {
+	{
           "timeout": -1,
           "trustDuration": 1200000,
           "name": "Default_groups_f7e06748e512efd782e2eb0449f1abee",
           "typeName": "AuthnMechGroups"
         },
         {
-          "enableAuthn": true,
-          "enableGroupLookup": false,
-          "enableImplicitEveryone": false,
-          "hostport": "openldap:389",
-          "bindDn": "uid\u003duser1,ou\u003dPeople,dc\u003dexample,dc\u003dcom",
-          "password": "password1",
-          "searchBase": "dc\u003dexample,dc\u003dcom",
-          "userSearchFilter": "uid\u003d%s",
-          "groupSearchFilter": "(|(member:1.2.840.113556.1.4.1941:\u003d%dn)(member:1.2.840.113556.1.4.1941:\u003d%s))",
-          "groupFormat": "CN",
-          "sslSupport": 0,
-          "supportedAuthMethods": 1,
+          "sampleUrl": "http://http-authn:4444/auth",
           "timeout": -1,
           "trustDuration": 1200000,
-          "name": "spldap",
-          "typeName": "AuthnMechLdap"
-        }
+          "name": "Basic-1",
+          "typeName": "AuthnMechBasic"
+	}
       ]
     }
   ],

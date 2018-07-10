@@ -31,6 +31,13 @@
           "trustDuration": 1200000,
           "name": "spldap",
           "typeName": "AuthnMechLdap"
+        },
+        {
+          "entityId": "http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY1",
+          "timeout": -1,
+          "trustDuration": 1800000,
+          "name": "SecMgr-Mech",
+          "typeName": "AuthnMechSaml"
         }
       ]
     }
