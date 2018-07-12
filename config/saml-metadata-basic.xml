@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EntitiesDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" cacheDuration="PT1H">    <!-- one hour -->
+
+    <EntityDescriptor entityID="http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY" ID="GSA">
+
+        <!-- ??? -->
+        <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <AssertionConsumerService index="0" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" 
+                Location="https://secmgr:8443/security-manager/samlassertionconsumer" />
+        </SPSSODescriptor>
+
+        <Organization>
+            <OrganizationName>google.com</OrganizationName>
+            <OrganizationDisplayName>Google Inc.</OrganizationDisplayName>
+            <OrganizationURL>http://www.google.com/</OrganizationURL>
+        </Organization>
+
+    </EntityDescriptor>
+
+    <EntityDescriptor entityID="http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY1" ID="security-manager">
+
+        <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" 
+                Location="https://secmgr1:8493/security-manager/samlauthn" />
+            <ArtifactResolutionService index="0" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" 
+                Location="http://secmgr1:8493/security-manager/samlartifact" />
+        </IDPSSODescriptor>
+
+        <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" AuthnRequestsSigned="true">
+            <AssertionConsumerService index="0" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" 
+                Location="https://secmgr1:8493/security-manager/samlassertionconsumer" />
+            <AssertionConsumerService index="1" isDefault="false" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" 
+                Location="https://secmgr1:8493/security-manager/samlassertionconsumer" />
+        </SPSSODescriptor>
+
+        <PDPDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <AuthzService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://secmgr1:8493/security-manager/samlauthz" />
+        </PDPDescriptor>
+
+        <Organization>
+            <OrganizationName>google.com</OrganizationName>
+            <OrganizationDisplayName>Google Inc.</OrganizationDisplayName>
+            <OrganizationURL>http://www.google.com/</OrganizationURL>
+        </Organization>
+
+    </EntityDescriptor>
+
+
+
+    <EntityDescriptor entityID="http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY/gsa-actual" ID="GSA">
+        <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+            <AssertionConsumerService index="0" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Artifact" 
+                Location="http://localhost:8088/sample-sp/saml/sp/SSO" />
+        </SPSSODescriptor>
+
+        <Organization>
+            <OrganizationName>google.com</OrganizationName>
+            <OrganizationDisplayName>Google Inc.</OrganizationDisplayName>
+            <OrganizationURL>http://www.google.com/</OrganizationURL>
+        </Organization>
+
+    </EntityDescriptor>
+
+</EntitiesDescriptor>
