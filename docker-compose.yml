@@ -9,6 +9,7 @@ services:
         - HTTP_PORT=8080
         - HTTPS_PORT=8443
         - METADATA_CONFIG=saml-metadata-complex.xml
+        - HOST_NAME=secmgr
     image: secmgr:latest
     environment:
       - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5006 -Djava.security.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
@@ -16,6 +17,8 @@ services:
       - 8443:8443
       - 8080:8080
       - 5006:5006
+    volumes:
+      - ~/.m2:/root/.m2
     depends_on:
       - openldap
       - secmgr1
@@ -32,6 +35,8 @@ services:
     image: sample_sp_for_secmgr
     ports:
       - 8088:8088
+    volumes:
+      - ~/.m2:/root/.m2
     depends_on:
       - secmgr
 
@@ -47,6 +52,7 @@ services:
         - HTTP_PORT=8090
         - HTTPS_PORT=8493
         - METADATA_CONFIG=saml-metadata-basic.xml
+        - HOST_NAME=secmgr1
     image: secmgr1:latest
     environment:
       - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY1 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5009 -Dsecurity.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
@@ -54,6 +60,8 @@ services:
       - 8090:8090
       - 8493:8493
       - 5009:5009
+    volumes:
+      - ~/.m2:/root/.m2
     depends_on:
       - http-authn
 

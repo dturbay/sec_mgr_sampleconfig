@@ -26,6 +26,12 @@ RUN mvn -f ${BUILD_APP_DIR}/pom.xml clean package
 
 FROM tomcat:8.0-jre8
 
+ARG AUTH_SITES_FILE_NAME
+ARG HTTP_PORT
+ARG HTTPS_PORT
+ARG HOST_NAME
+ARG METADATA_CONFIG
+
 # TODO: remove after file gets completed
 RUN apt update && apt install -y less vim
 
@@ -36,7 +42,6 @@ COPY --from=BUILD /usr/src/myapp/target/security-manager-1.0-SNAPSHOT ${WEB_APP_
 
 COPY ./config ${WEB_APP_CONF_PATH}
 
-ARG AUTH_SITES_FILE_NAME
 RUN cd ${WEB_APP_CONF_PATH} && ln -s ${AUTH_SITES_FILE_NAME} SampleAuthSites.json
 
 COPY ./config/logging.properties ${WEB_APP_PATH}/WEB-INF/classes
@@ -45,19 +50,9 @@ RUN sed -i "s@#APP_PATH#@${WEB_APP_PATH}@" ${CATALINA_HOME}/conf/Catalina/localh
 	&& sed -i "s@#AUTHN_SITES_PATH#@${WEB_APP_CONF_PATH}/SampleAuthSites.json@" ${CATALINA_HOME}/conf/Catalina/localhost/security-manager.xml \
 	&& sed -i "s@#CONFIG_DIR#@${WEB_APP_CONF_PATH}@" ${WEB_APP_CONF_PATH}/SampleAuthSites.json
 
-RUN keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias tomcat -dname "CN=secmgr.com, OU=ou, O=o, L=l, S=s ,C=us" -keystore ${WEB_APP_CONF_PATH}/keystore.p12 -keypass changeit -storepass changeit -storetype PKCS12
-
 RUN cp --backup=numbered ${WEB_APP_CONF_PATH}/server.xml ${CATALINA_HOME}/conf
 
-ARG SP_SAML_ENTITY
-ARG IDP_SAML_ENTITY
-ARG SEC_MGR_HOST_PORT
-ARG ARTIFACT_CONSUMER_URL
-ARG HTTP_PORT
-ARG HTTPS_PORT
-
-ARG METADATA_CONFIG
-
+RUN keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias tomcat -dname "CN=${HOST_NAME}, OU=ou, O=o, L=l, S=s ,C=us" -keystore ${WEB_APP_CONF_PATH}/keystore.p12 -keypass changeit -storepass changeit -storetype PKCS12
 
 RUN sed -i -e "s|{HTTP_PORT}|${HTTP_PORT}|" -e "s|{HTTPS_PORT}|${HTTPS_PORT}|" ${CATALINA_HOME}/conf/server.xml
 
