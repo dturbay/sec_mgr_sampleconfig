@@ -83,7 +83,7 @@
     <Connector port="{HTTPS_PORT}" protocol="org.apache.coyote.http11.Http11NioProtocol"
                maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
                clientAuth="false" sslProtocol="TLS"
-	       keystoreFile="/opt/security-manager-conf/keystore.jks"
+	       keystoreFile="/opt/security-manager-conf/keystore.p12"
 	       keystorePass="changeit" />
 
     <!-- Define an AJP 1.3 Connector on port 8009 -->

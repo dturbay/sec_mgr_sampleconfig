@@ -45,7 +45,7 @@ RUN sed -i "s@#APP_PATH#@${WEB_APP_PATH}@" ${CATALINA_HOME}/conf/Catalina/localh
 	&& sed -i "s@#AUTHN_SITES_PATH#@${WEB_APP_CONF_PATH}/SampleAuthSites.json@" ${CATALINA_HOME}/conf/Catalina/localhost/security-manager.xml \
 	&& sed -i "s@#CONFIG_DIR#@${WEB_APP_CONF_PATH}@" ${WEB_APP_CONF_PATH}/SampleAuthSites.json
 
-RUN keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias tomcat -dname "CN=secmgr.com, OU=ou, O=o, L=l, S=s ,C=us" -keystore ${WEB_APP_CONF_PATH}/keystore.jks -keypass changeit -storepass changeit
+RUN keytool -genkey -noprompt -trustcacerts -keyalg RSA -alias tomcat -dname "CN=secmgr.com, OU=ou, O=o, L=l, S=s ,C=us" -keystore ${WEB_APP_CONF_PATH}/keystore.p12 -keypass changeit -storepass changeit -storetype PKCS12
 
 RUN cp --backup=numbered ${WEB_APP_CONF_PATH}/server.xml ${CATALINA_HOME}/conf
 
