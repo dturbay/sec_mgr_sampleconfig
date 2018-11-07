@@ -22,7 +22,7 @@
             <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
                 Location="https://secmgr:8443/security-manager/samlauthn" />
             <ArtifactResolutionService index="0" isDefault="true" Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" 
-                Location="http://secmgr:8443/security-manager/samlartifact" />
+                Location="https://secmgr:8443/security-manager/samlartifact" />
         </IDPSSODescriptor>
 
         <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" AuthnRequestsSigned="true">
@@ -50,9 +50,9 @@
         <EntityDescriptor entityID="http://google.com/enterprise/gsa/T4-KRQHV3XHUQEXY1">
             <IDPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
                 <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                    Location="https://secmgr1:8493/security-manager/samlauthn"/>
+                    Location="https://secmgr1/security-manager/samlauthn"/>
                 <ArtifactResolutionService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" 
-                    Location="http://secmgr1:8090/security-manager/samlartifact" index="0" isDefault="true"/>
+                    Location="https://secmgr1/security-manager/samlartifact" index="0" isDefault="true"/>
             </IDPSSODescriptor>
         </EntityDescriptor>
     </EntitiesDescriptor>

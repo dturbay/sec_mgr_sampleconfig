@@ -20,6 +20,7 @@ services:
     depends_on:
       - openldap
       - secmgr1
+      - redis
 
   openldap:
     build: ./openldap_sample_img
@@ -40,7 +41,25 @@ services:
     build: ./http_authn_service
     image: http_authn_service
 
+  redis:
+    image: redis:5.0-rc4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+
   secmgr1:
+    image: haproxy:1.8
+    volumes:
+      - ./config/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - secmgr1-worker1
+      - secmgr1-worker2
+      - secmgr1-worker3
+      - secmgr1-worker4
+
+
+  secmgr1-worker1:
     build:
       context: .
       args:
@@ -52,10 +71,70 @@ services:
     image: secmgr1:latest
     environment:
       - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY1 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5009 -Dsecurity.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
-    ports:
-      - 8090:8090
-      - 8493:8493
-      - 5009:5009
+    # ports:
+      # - 8090:8090
+      # - 8493:8493
+      # - 5009:5009
     depends_on:
       - http-authn
+      - redis
 
+  secmgr1-worker2:
+    build:
+      context: .
+      args:
+        - AUTH_SITES_FILE_NAME=HttpBasic_AuthSites.json
+        - HTTP_PORT=8090
+        - HTTPS_PORT=8493
+        - METADATA_CONFIG=saml-metadata-basic.xml
+        - HOST_NAME=secmgr1
+    image: secmgr1:latest
+    environment:
+      - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY1 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5009 -Dsecurity.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
+    # ports:
+      # - 8090:8090
+      # - 8493:8493
+      # - 5009:5009
+    depends_on:
+      - http-authn
+      - redis
+
+  secmgr1-worker3:
+    build:
+      context: .
+      args:
+        - AUTH_SITES_FILE_NAME=HttpBasic_AuthSites.json
+        - HTTP_PORT=8090
+        - HTTPS_PORT=8493
+        - METADATA_CONFIG=saml-metadata-basic.xml
+        - HOST_NAME=secmgr1
+    image: secmgr1:latest
+    environment:
+      - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY1 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5009 -Dsecurity.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
+    # ports:
+      # - 8090:8090
+      # - 8493:8493
+      # - 5009:5009
+    depends_on:
+      - http-authn
+      - redis
+
+  secmgr1-worker4:
+    build:
+      context: .
+      args:
+        - AUTH_SITES_FILE_NAME=HttpBasic_AuthSites.json
+        - HTTP_PORT=8090
+        - HTTPS_PORT=8493
+        - METADATA_CONFIG=saml-metadata-basic.xml
+        - HOST_NAME=secmgr1
+    image: secmgr1:latest
+    environment:
+      - CATALINA_OPTS=-Dgsa.applianceid=T4-KRQHV3XHUQEXY1 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5009 -Dsecurity.egd=file:/dev/urandom -Denv=dev -Xms1024M -Xmx2048M -XX:PermSize=256M -XX:MaxPermSize=768m
+    # ports:
+      # - 8090:8090
+      # - 8493:8493
+      # - 5009:5009
+    depends_on:
+      - http-authn
+      - redis
