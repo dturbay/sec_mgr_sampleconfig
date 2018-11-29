@@ -1,25 +1,11 @@
 FROM maven:3.5.4-jdk-8 AS BUILD
 
-#RUN apk add --no-cache build-base curl automake autoconf libtool git zlib-dev
-
-#ENV PROTOBUF_VERSION=3.5.1
-
-#RUN mkdir -p /protobuf && \
-#    curl -L https://github.com/google/protobuf/archive/v${PROTOBUF_VERSION}.tar.gz | tar xvz --strip-components=1 -C /protobuf
-
-#RUN cd /protobuf && \
-#    autoreconf -f -i -Wall,no-obsolete && \
-#    ./configure --prefix=/usr --enable-static=no && \
-#    make -j2 && make install
-
 ENV BUILD_APP_DIR=/usr/src/myapp
 
 COPY ./secmgr/src ${BUILD_APP_DIR}/src
-COPY ./secmgr/lib ${BUILD_APP_DIR}/lib
 COPY ./secmgr/pom.xml ${BUILD_APP_DIR}
 
-RUN mvn install:install-file -Dfile=${BUILD_APP_DIR}/lib/cryptix-jce-provider.jar -DgroupId=cryptix -DartifactId=cryptix-jce -Dversion=na -Dpackaging=jar
-RUN mvn -f ${BUILD_APP_DIR}/pom.xml clean package
+RUN mvn -f ${BUILD_APP_DIR}/pom.xml clean package -Dmaven.test.skip=true
 
 
 # -----------------------
@@ -31,9 +17,6 @@ ARG HTTP_PORT
 ARG HTTPS_PORT
 ARG HOST_NAME
 ARG METADATA_CONFIG
-
-# TODO: remove after file gets completed
-RUN apt update && apt install -y less vim
 
 ENV WEB_APP_PATH=/opt/security-manager
 ENV WEB_APP_CONF_PATH=/opt/security-manager-conf
